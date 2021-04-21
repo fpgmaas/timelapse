@@ -1,3 +1,6 @@
 images/*
 !images/.gitkeep
+videos/*
+!videos/.gitkeep
+
 .ipynb_checkpoints
