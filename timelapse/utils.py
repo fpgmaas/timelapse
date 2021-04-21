@@ -55,7 +55,7 @@ def find_best_focus(cap):
     logging.info('Finding the optimal focus.')
     cap.set(cv2.CAP_PROP_AUTOFOCUS, 0)
     sharpness_dict = dict()
-    for focus in range(0,255,5):
+    for focus in range(0,230,5):
         cap.set(cv2.CAP_PROP_FOCUS ,focus)
         ret,frame = cap.read()
         sharpness_dict[focus] = calculate_sharpness(frame)
