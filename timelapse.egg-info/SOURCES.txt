@@ -1,0 +1,7 @@
+README.md
+setup.py
+timelapse.egg-info/PKG-INFO
+timelapse.egg-info/SOURCES.txt
+timelapse.egg-info/dependency_links.txt
+timelapse.egg-info/requires.txt
+timelapse.egg-info/top_level.txt

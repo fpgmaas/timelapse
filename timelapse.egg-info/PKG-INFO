@@ -1,0 +1,11 @@
+Metadata-Version: 1.2
+Name: timelapse
+Version: 1.0.0
+Summary: Capture images on Raspberry Pi with webcam and create a timelapse
+Home-page: https://github.com/fpgmaas/timelapse
+Author: Florian Maas
+Author-email: flo12392@gmail.com
+License: UNKNOWN
+Description: UNKNOWN
+Platform: UNKNOWN
+Requires-Python: ~=3.6
