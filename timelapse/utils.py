@@ -10,7 +10,6 @@ def find_correct_exposure(cap,min_brightness=100,max_brightness=125, max_iter=10
     while not exposure_fixed:
         ret,frame = cap.read()
         brightness = calculate_brightness(frame)
-        print(exposure)
         if brightness <= min_brightness:
             exposure+=1
             cap.set(cv2.CAP_PROP_EXPOSURE, exposure)
@@ -23,7 +22,7 @@ def find_correct_exposure(cap,min_brightness=100,max_brightness=125, max_iter=10
             exposure_fixed=True
         else:
             exposure_fixed=True
-    return cap, exposure, n_iter>max_iter
+    return cap, exposure, n_iter
 
 def calculate_brightness(image_array):
     """
