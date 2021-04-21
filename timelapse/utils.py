@@ -1,5 +1,6 @@
 from PIL import Image, ImageStat
 import math
+import cv2
 
 def find_correct_exposure(cap,min_brightness=100,max_brightness=125, max_iter=1000):
     cap.set(cv2.CAP_PROP_AUTO_EXPOSURE, 1)
