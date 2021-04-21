@@ -31,7 +31,7 @@ def find_correct_exposure(cap,min_brightness=100,max_brightness=125, max_iter=10
         else:
             logging.info(f'Iteration {n_iter-1} - Acceptable exposure reached - Brightness: {brightness}. Exposure was {exposure}')
             exposure_fixed=True
-        if exposure == 0 | exposure == 2047:
+        if exposure == 0 or exposure == 2047:
             exposure_fixed=True
             logging.info(f'Iteration {n_iter-1} - Exposure limit reached - Brightness: {brightness}. Exposure was {exposure}')
 
