@@ -73,6 +73,7 @@ def get_properties(cap):
         12:'CV_CAP_PROP_SATURATION',
         13:'CV_CAP_PROP_HUE',
         14:'CV_CAP_PROP_GAIN',
-        15:'CV_CAP_PROP_EXPOSURE'
+        15:'CV_CAP_PROP_EXPOSURE',
+        28:'CV_CAP_PROP_FOCUS'
     }
     return {value : cap.get(key) for key,value in properties.items()}
