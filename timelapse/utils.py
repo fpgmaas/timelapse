@@ -2,8 +2,9 @@ from PIL import Image, ImageStat
 import math
 import cv2
 import logging
+import numpy as np
 
-def find_correct_exposure(cap,min_brightness=100,max_brightness=125, max_iter=1000, verbose = False):
+def find_correct_exposure(cap,min_brightness=100,max_brightness=125, max_iter=1000, step = 5, verbose = False):
     cap.set(cv2.CAP_PROP_AUTO_EXPOSURE, 1)
     exposure_fixed = False
     exposure = cap.get(15)
@@ -14,13 +15,13 @@ def find_correct_exposure(cap,min_brightness=100,max_brightness=125, max_iter=10
         ret,frame = cap.read()
         brightness = calculate_brightness(frame)
         if brightness <= min_brightness:
-            exposure+=1
+            exposure = np.min([2047, exposure+step])
             cap.set(cv2.CAP_PROP_EXPOSURE, exposure)
             n_iter+=1
             if verbose: 
                 logging.info(f'Iteration {n_iter-1} - Brightness: {brightness}. Increased exposure to {exposure}')
         elif brightness >= max_brightness:
-            exposure-=1
+            exposure = np.max([0, exposure-step])
             cap.set(cv2.CAP_PROP_EXPOSURE, exposure)
             n_iter+=1
             if verbose: 
@@ -31,7 +32,7 @@ def find_correct_exposure(cap,min_brightness=100,max_brightness=125, max_iter=10
         else:
             logging.info(f'Iteration {n_iter-1} - Acceptable exposure reached - Brightness: {brightness}. Exposure was {exposure}')
             exposure_fixed=True
-        if exposure == 0 or exposure == 2047:
+        if exposure < 0 or exposure > 2047:
             exposure_fixed=True
             logging.info(f'Iteration {n_iter-1} - Exposure limit reached - Brightness: {brightness}. Exposure was {exposure}')
 
