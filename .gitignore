@@ -4,3 +4,4 @@ videos/*
 !videos/.gitkeep
 
 .ipynb_checkpoints
+.DS_Store
