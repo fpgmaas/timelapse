@@ -47,6 +47,25 @@ def calculate_brightness(image_array):
     r,g,b = stat.mean
     return math.sqrt(0.241*(r**2) + 0.691*(g**2) + 0.068*(b**2))
 
+def calculate_sharpness(frame):
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    return cv2.Laplacian(gray, cv2.CV_64F).var()
+
+def find_best_focus(cap):
+    logging.info('Finding the optimal focus.')
+    cap.set(cv2.CAP_PROP_AUTOFOCUS, 0)
+    sharpness_dict = dict()
+    for focus in range(0,255,5):
+        cap.set(cv2.CAP_PROP_FOCUS ,focus)
+        ret,frame = cap.read()
+        sharpness_dict[focus] = calculate_sharpness(frame)
+    
+    logging.info('Sharpness per focus value: ' + ', '.join([f'{k}:{round(v,1)}' for k, v in sharpness_dict.items()]))
+    best_focus = max(sharpness_dict, key=sharpness_dict.get)
+    logging.info(f'Best focus at {best_focus}, {sharpness_dict[best_focus]}')
+    cap.set(cv2.CAP_PROP_FOCUS ,best_focus)
+    return cap, best_focus
+
 def get_properties(cap):
     properties = {
         10:'CV_CAP_PROP_BRIGHTNESS',
