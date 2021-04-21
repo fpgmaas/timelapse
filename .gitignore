@@ -6,3 +6,4 @@ videos/*
 .ipynb_checkpoints
 .DS_Store
 secrets
+log.txt
