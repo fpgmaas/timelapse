@@ -53,6 +53,9 @@ def calculate_sharpness(frame):
     return cv2.Laplacian(gray, cv2.CV_64F).var()
 
 def find_best_focus(properties):
+    """
+    Try to find the best focus by doing a grid search, each time decreasing the step-size in the grid.
+    """
     logging.info('Finding the optimal focus.')
     
     sharpness_dict = dict()
