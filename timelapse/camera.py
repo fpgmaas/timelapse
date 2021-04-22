@@ -21,7 +21,7 @@ class CameraProperties:
         cap = cv2.VideoCapture(0)
         cap.set(cv2.CAP_PROP_FRAME_WIDTH, self.width)
         cap.set(cv2.CAP_PROP_FRAME_HEIGHT, self.height)
-        if eself.xposure is not None:
+        if self.xposure is not None:
             cap.set(cv2.CAP_PROP_EXPOSURE, self.exposure)
         cap.set(cv2.CAP_PROP_AUTOFOCUS, self.autofocus)
         if self.focus is not None:
