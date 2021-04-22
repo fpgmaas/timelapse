@@ -17,12 +17,12 @@ def find_correct_exposure(properties,min_brightness=100,max_brightness=125, max_
         ret,frame = cap.read()
         brightness = calculate_brightness(frame)
         if brightness <= min_brightness:
-            exposure = np.min([MAX_EXPOSURE, np.ceil(exposure*factor]))
+            exposure = np.min([MAX_EXPOSURE, np.ceil([exposure*factor])])
             properties['CV_CAP_PROP_EXPOSURE'] = exposure
             n_iter+=1
             logging.info(f'Iteration {n_iter-1} - Brightness: {brightness}. Increased exposure to {exposure}')
         elif brightness >= max_brightness:
-            exposure = np.max([MIN_EXPOSURE, np.floor(exposure/factor)])
+            exposure = np.max([MIN_EXPOSURE, np.floor([exposure/factor])])
             properties['CV_CAP_PROP_EXPOSURE'] = exposure
             n_iter+=1
             logging.info(f'Iteration {n_iter-1} - Brightness: {brightness}. Decreased exposure to {exposure}')
