@@ -15,7 +15,7 @@ def find_correct_exposure(properties,min_brightness=100,max_brightness=125, max_
     while not exposure_fixed:
         cap = init_cap_dict(properties)
         ret,frame = cap.read()
-        brightness = calculate_brightness(frame)x
+        brightness = calculate_brightness(frame)
         if brightness <= min_brightness:
             exposure = np.min([MAX_EXPOSURE, np.ceil(exposure*factor]))
             properties['CV_CAP_PROP_EXPOSURE'] = exposure
