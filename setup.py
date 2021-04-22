@@ -8,6 +8,6 @@ setup(
     author_email='flo12392@gmail.com',
     description='Capture images on Raspberry Pi with webcam and create a timelapse',
     packages=find_packages(),    
-    install_requires=['numpy'],
+    install_requires=['numpy','pillow'],
     python_requires="~=3.6"
 )

@@ -7,7 +7,10 @@ from timelapse.utils import calculate_brightness, calculate_sharpness
 
 class CameraProperties:
 
-    def __init__(self,width=1280, height=720, autofocus=0, exposure=None, focus=None):      
+    def __init__(self,width=1280, height=720, autofocus=0, exposure=None, focus=None):
+        """
+        Class to keep track and determine some of the camera's properties. Developed with a Logitech C920.
+        """
         self.width = width
         self.height = height
         self.autofocus = autofocus
@@ -16,6 +19,8 @@ class CameraProperties:
         self.cap = None
         self.MAX_EXPOSURE = 2047
         self.MIN_EXPOSURE = 3
+        self.MIN_FOCUS = 0
+        self.MAX_FOCUS = 230
 
     def init_camera(self):    
         cap = cv2.VideoCapture(0)
@@ -28,7 +33,12 @@ class CameraProperties:
             cap.set(cv2.CAP_PROP_FOCUS, self.focus)
         return Camera(cap)
 
-    def find_correct_exposure(self, min_brightness=100, max_brightness=125, max_iter=1000, factor = 1.05):
+    def find_correct_exposure(self, min_brightness=100, max_brightness=125, max_iter=100, factor = 1.05):
+        """
+        Determine the correct exposure for the camera, given a target minimum and maximum brightness.
+        It is done by raising or lowering the exposure by a factor until the brightness of the image
+        falls within the range [min_brightness, max_brightness].
+        """
         exposure_fixed = False
         logging.info(f'Starting find_correct exposure, current exposure: {self.exposure}')
         n_iter=0
@@ -69,12 +79,12 @@ class CameraProperties:
 
     def find_best_focus(self):
         """
-        Try to find the best focus by doing a grid search, each time decreasing the step-size in the grid.
+        Try to find the best focus by doing a grid search in three phases, each time decreasing the step-size in the grid.
         """
         logging.info('Finding the optimal focus.')
         
         sharpness_dict = dict()
-        for focus in range(0,230,25):
+        for focus in range(self.MIN_FOCUS,self.MAX_FOCUS,25):
             self.focus = focus
             camera = self.init_camera()
             ret,frame = camera.capture()
@@ -109,8 +119,10 @@ class CameraProperties:
         self.focus = best_focus_3
 
 
-
 class Camera:
+    """
+    Object to hold the cap-object.
+    """
 
     def __init__(self,cap):
         self.cap = cap
