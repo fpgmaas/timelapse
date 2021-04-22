@@ -76,7 +76,7 @@ class CameraProperties:
         sharpness_dict = dict()
         for focus in range(0,230,25):
             self.focus = focus
-            camera = init_camera()
+            camera = self.init_camera()
             ret,frame = camera.capture()
             sharpness_dict[self.focus] = calculate_sharpness(frame)
             camera.close()
@@ -87,7 +87,7 @@ class CameraProperties:
         sharpness_dict = dict()
         for focus in range(np.max([0,best_focus_1-15]),np.min([250,best_focus_1+20]),5):
             self.focus = focus
-            camera = init_camera()
+            camera = self.init_camera()
             ret,frame = camera.capture()
             sharpness_dict[self.focus] = calculate_sharpness(frame)
             camera.close()
@@ -98,7 +98,7 @@ class CameraProperties:
         sharpness_dict = dict()
         for focus in range(np.max([0,best_focus_2-10]),np.min([250,best_focus_2+12]),2):
             self.focus = focus
-            camera = init_camera()
+            camera = self.init_camera()
             ret,frame = camera.capture()
             sharpness_dict[self.focus] = calculate_sharpness(frame)
             camera.close()
