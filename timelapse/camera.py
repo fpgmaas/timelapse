@@ -21,7 +21,7 @@ class CameraProperties:
         cap = cv2.VideoCapture(0)
         cap.set(cv2.CAP_PROP_FRAME_WIDTH, self.width)
         cap.set(cv2.CAP_PROP_FRAME_HEIGHT, self.height)
-        if self.xposure is not None:
+        if self.exposure is not None:
             cap.set(cv2.CAP_PROP_EXPOSURE, self.exposure)
         cap.set(cv2.CAP_PROP_AUTOFOCUS, self.autofocus)
         if self.focus is not None:
@@ -38,7 +38,7 @@ class CameraProperties:
             ret,frame = camera.read()
             brightness = calculate_brightness(frame)
             if brightness <= min_brightness:
-                self.exposure = np.min([self.MAX_EXPOSURE, np.ceil([self.xposure*factor])])
+                self.exposure = np.min([self.MAX_EXPOSURE, np.ceil([self.exposure*factor])])
                 n_iter+=1
                 logging.info(f'Iteration {n_iter-1} - Brightness: {brightness}. Increased exposure to {self.exposure}')
             elif brightness >= max_brightness:
