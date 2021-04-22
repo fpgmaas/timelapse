@@ -7,16 +7,18 @@ from timelapse.utils import calculate_brightness, calculate_sharpness
 
 class CameraProperties:
 
-    def __init__(self,width=1280, height=720, autofocus=0, exposure=None, focus=None):
+    def __init__(self,width=1280, height=720, autofocus=0, autoexposure=1, exposure=None, focus=None):
         """
         Class to keep track and determine some of the camera's properties. Developed with a Logitech C920.
         """
         self.width = width
         self.height = height
         self.autofocus = autofocus
+        self.autoexposure = autoexposure
         self.exposure = exposure
         self.focus = focus
         self.cap = None
+        
         self.MAX_EXPOSURE = 2047
         self.MIN_EXPOSURE = 3
         self.MIN_FOCUS = 0
@@ -26,6 +28,7 @@ class CameraProperties:
         cap = cv2.VideoCapture(0)
         cap.set(cv2.CAP_PROP_FRAME_WIDTH, self.width)
         cap.set(cv2.CAP_PROP_FRAME_HEIGHT, self.height)
+        cap.set(cv2.CAP_PROP_AUTO_EXPOSURE, self.autoexposure)
         if self.exposure is not None:
             cap.set(cv2.CAP_PROP_EXPOSURE, self.exposure)
         cap.set(cv2.CAP_PROP_AUTOFOCUS, self.autofocus)
