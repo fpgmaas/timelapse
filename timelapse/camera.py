@@ -106,7 +106,7 @@ class CameraProperties:
         logging.info('Iteration 3: Sharpness per focus value: ' + ', '.join([f'{k}:{round(v,1)}' for k, v in sharpness_dict.items()]))
 
         logging.info(f'Best focus at {best_focus_3}, {sharpness_dict[best_focus_3]}')
-        self.focus = best_3
+        self.focus = best_focus_3
 
 
 
