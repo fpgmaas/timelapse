@@ -12,7 +12,7 @@ def find_correct_exposure(properties,min_brightness=100,max_brightness=125, max_
 
     logging.info(f'Starting find_correct exposure, current exposure: {exposure}')
     n_iter=0
-    prev_exposure = 9999
+    prev_exposures = [exposure]
     while not exposure_fixed:
         cap = init_cap_dict(properties)
         ret,frame = cap.read()
@@ -36,11 +36,15 @@ def find_correct_exposure(properties,min_brightness=100,max_brightness=125, max_
         if exposure == MIN_EXPOSURE or exposure == MAX_EXPOSURE:
             exposure_fixed=True
             logging.info(f'Iteration {n_iter-1} - Exposure limit reached - Brightness: {brightness}. Exposure was {exposure}')
-        if exposure == prev_exposure:
-            exposure_fixed=True
-            logging.info(f'Iteration {n_iter-1} - Exposure same as previous exposure, terminating. - Brightness: {brightness}. Exposure was {exposure}')
-        else:
-            prev_exposure = exposure
+
+        # check if stuck in loop
+        MAX = 5
+        prev_exposures.append(exposure)
+        if len(prev_exposures)>MAX:
+            len_exposures.pop()
+        if len(np.unqiue(prev_exposures)<=2) and len(prev_exposures)>=MAX:
+            logging.info(f'Iteration {n_iter-1} - Stuck in a loop, terminating. - Brightness: {brightness}. Exposure was {exposure}')
+            exposure_fixed = True
 
         end_cap(cap)
 
