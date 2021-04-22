@@ -35,7 +35,7 @@ class CameraProperties:
         prev_exposures = [self.exposure]
         while not exposure_fixed:
             camera = self.init_camera()
-            ret,frame = camera.read()
+            ret,frame = camera.capture()
             brightness = calculate_brightness(frame)
             if brightness <= min_brightness:
                 self.exposure = np.min([self.MAX_EXPOSURE, np.ceil([self.exposure*factor])])
