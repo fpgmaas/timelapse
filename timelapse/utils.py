@@ -80,8 +80,8 @@ def get_properties(cap):
 
 def init_cap_dict(properties):
     return init_cap(
-        width = properties['CAP_PROP_FRAME_WIDTH'],
-        height = properties['CAP_PROP_FRAME_HEIGHT'],
+        width = properties['CV_CAP_PROP_FRAME_WIDTH'],
+        height = properties['CV_CAP_PROP_FRAME_HEIGHT'],
         exposure = properties['CV_CAP_PROP_EXPOSURE'],
         focus = properties['CV_CAP_PROP_FOCUS'],
         autofocus = properties['CV_CAP_PROP_AUTOFOCUS']
