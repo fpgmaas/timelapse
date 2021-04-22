@@ -73,7 +73,7 @@ def get_properties(cap):
         3: 'CAP_PROP_FRAME_WIDTH',
         4: 'CAP_PROP_FRAME_HEIGHT',
         15:'CV_CAP_PROP_EXPOSURE',
-        28:'CV_CAP_PROP_FOCUS'
+        28:'CV_CAP_PROP_FOCUS',
         39: 'CV_CAP_PROP_AUTOFOCUS'
     }
     return {value : cap.get(key) for key,value in properties.items()}
