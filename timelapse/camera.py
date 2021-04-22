@@ -46,10 +46,10 @@ class CameraProperties:
                 n_iter+=1
                 logging.info(f'Iteration {n_iter-1} - Brightness: {brightness}. Decreased exposure to {self.exposure}')
             elif n_iter>max_iter:
-                logging.info(f'Iteration {n_iter-1} - Limit exceeded - Brightness: {brightness}. Exposure was {self.exposure}')
+                logging.info(f'Iteration {n_iter} - Limit exceeded - Brightness: {brightness}. Exposure was {self.exposure}')
                 exposure_fixed=True
             else:
-                logging.info(f'Iteration {n_iter-1} - Acceptable exposure reached - Brightness: {brightness}. Exposure was {self.exposure}')
+                logging.info(f'Iteration {n_iter} - Acceptable exposure reached - Brightness: {brightness}. Exposure was {self.exposure}')
                 exposure_fixed=True
             if self.exposure == self.MIN_EXPOSURE or self.exposure == self.MAX_EXPOSURE:
                 exposure_fixed=True
