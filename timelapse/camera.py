@@ -126,7 +126,7 @@ class Camera:
         return {value : self.cap.get(key) for key,value in properties.items()}
 
     def capture(self):
-        return cap.read()
+        return self.cap.read()
 
     def close(self):
         self.cap.release()
