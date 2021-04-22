@@ -69,7 +69,7 @@ class CameraProperties:
             MAX = 5 # best to keep at odd number
             prev_exposures.append(self.exposure)
             if len(prev_exposures)>MAX:
-                prev_exposures.pop()
+                prev_exposures.pop(0)
             if len(np.unique(prev_exposures))<=2 and len(prev_exposures)>=MAX:
                 logging.info(f'Iteration {n_iter-1} - Stuck in a loop, terminating. - Brightness: {brightness}. Exposure was {self.exposure}')
                 exposure_fixed = True
