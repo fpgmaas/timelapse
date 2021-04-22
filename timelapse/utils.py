@@ -54,18 +54,41 @@ def calculate_sharpness(frame):
 
 def find_best_focus(properties):
     logging.info('Finding the optimal focus.')
+    
     sharpness_dict = dict()
-    for focus in range(0,230,5):
+    for focus in range(0,230,25):
         properties['CV_CAP_PROP_FOCUS'] = focus
         cap = init_cap_dict(properties)
         ret,frame = cap.read()
         sharpness_dict[focus] = calculate_sharpness(frame)
         end_cap(cap)
-    
-    logging.info('Sharpness per focus value: ' + ', '.join([f'{k}:{round(v,1)}' for k, v in sharpness_dict.items()]))
-    best_focus = max(sharpness_dict, key=sharpness_dict.get)
-    logging.info(f'Best focus at {best_focus}, {sharpness_dict[best_focus]}')
-    properties['CV_CAP_PROP_FOCUS'] = best_focus
+    best_1 = max(sharpness_dict, key=sharpness_dict.get)
+    logging.info('Iteration 1: Sharpness per focus value: ' + ', '.join([f'{k}:{round(v,1)}' for k, v in sharpness_dict.items()]))
+
+
+    sharpness_dict = dict()
+    for focus in range(np.max([0,best_1-15]),np.min([250,best_1+20]),5):
+        properties['CV_CAP_PROP_FOCUS'] = focus
+        cap = init_cap_dict(properties)
+        ret,frame = cap.read()
+        sharpness_dict[focus] = calculate_sharpness(frame)
+        end_cap(cap)
+    best_2 = max(sharpness_dict, key=sharpness_dict.get)
+    logging.info('Iteration 2: Sharpness per focus value: ' + ', '.join([f'{k}:{round(v,1)}' for k, v in sharpness_dict.items()]))
+
+
+    sharpness_dict = dict()
+    for focus in range(np.max([0,best_2-10]),np.min([250,best_2+12]),2):
+        properties['CV_CAP_PROP_FOCUS'] = focus
+        cap = init_cap_dict(properties)
+        ret,frame = cap.read()
+        sharpness_dict[focus] = calculate_sharpness(frame)
+        end_cap(cap)
+    best_3 = max(sharpness_dict, key=sharpness_dict.get)
+    logging.info('Iteration 3: Sharpness per focus value: ' + ', '.join([f'{k}:{round(v,1)}' for k, v in sharpness_dict.items()]))
+
+    logging.info(f'Best focus at {best_3}, {sharpness_dict[best_3]}')
+    properties['CV_CAP_PROP_FOCUS'] = best_3
     return properties
 
 def get_properties(cap):
