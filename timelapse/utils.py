@@ -43,7 +43,7 @@ def find_correct_exposure(properties,min_brightness=100,max_brightness=125, max_
         if len(prev_exposures)>MAX:
             len_exposures.pop()
         logging.info(f'prev_exposures: {prev_exposures}')
-        if len(np.unique(prev_exposures)<=2) and len(prev_exposures)>=MAX:
+        if len(np.unique(prev_exposures))<=2 and len(prev_exposures)>=MAX:
             logging.info(f'Iteration {n_iter-1} - Stuck in a loop, terminating. - Brightness: {brightness}. Exposure was {exposure}')
             exposure_fixed = True
 
