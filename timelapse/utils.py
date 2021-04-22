@@ -4,7 +4,7 @@ import cv2
 import logging
 import numpy as np
 
-def find_correct_exposure(properties,min_brightness=100,max_brightness=125, max_iter=1000, step = 5):
+def find_correct_exposure(properties,min_brightness=100,max_brightness=125, max_iter=1000, factor = 1.05):
     exposure_fixed = False
     exposure = properties['CV_CAP_PROP_EXPOSURE']
     MAX_EXPOSURE = 2047
@@ -15,14 +15,14 @@ def find_correct_exposure(properties,min_brightness=100,max_brightness=125, max_
     while not exposure_fixed:
         cap = init_cap_dict(properties)
         ret,frame = cap.read()
-        brightness = calculate_brightness(frame)
+        brightness = calculate_brightness(frame)x
         if brightness <= min_brightness:
-            exposure = np.min([MAX_EXPOSURE, exposure+step])
+            exposure = np.min([MAX_EXPOSURE, np.ceil(exposure*factor]))
             properties['CV_CAP_PROP_EXPOSURE'] = exposure
             n_iter+=1
             logging.info(f'Iteration {n_iter-1} - Brightness: {brightness}. Increased exposure to {exposure}')
         elif brightness >= max_brightness:
-            exposure = np.max([MIN_EXPOSURE, exposure-step])
+            exposure = np.max([MIN_EXPOSURE, np.floor(exposure/factor)])
             properties['CV_CAP_PROP_EXPOSURE'] = exposure
             n_iter+=1
             logging.info(f'Iteration {n_iter-1} - Brightness: {brightness}. Decreased exposure to {exposure}')
