@@ -1,5 +1,8 @@
 # timelapse
 
+![til](example.gif)
+
+
 ## Jupyter Notebook on Raspberry Pi:
 ```
 ssh IP 
